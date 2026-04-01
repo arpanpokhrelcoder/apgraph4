@@ -1,0 +1,61 @@
+/* Paste this inside your <style> tags or a separate .css file */
+:root {
+    --primary: #6366f1; /* Indigo */
+    --secondary: #a855f7; /* Purple */
+    --bg-gradient: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    --glass: rgba(255, 255, 255, 0.8);
+}
+
+body {
+    background: var(--bg-gradient);
+    min-height: 100vh;
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    color: #1e293b;
+}
+
+/* Glassmorphism Product & Category Cards */
+.card-glass {
+    background: var(--glass);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 20px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card-glass:active {
+    transform: scale(0.95);
+}
+
+/* Premium Buttons */
+.btn-premium {
+    background: linear-gradient(to right, var(--primary), var(--secondary));
+    color: white;
+    font-weight: 600;
+    border-radius: 12px;
+    padding: 12px 24px;
+    box-shadow: 0 4px 15px rgba(99, 102, 241, 0.4);
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-premium:hover {
+    box-shadow: 0 6px 20px rgba(99, 102, 241, 0.6);
+    filter: brightness(1.1);
+}
+
+/* Full Mobile View Optimization */
+#home-page, #profile-page, #settings-page {
+    max-width: 500px; /* Centers it on larger screens, full width on mobile */
+    margin: 0 auto;
+    padding-bottom: 80px; /* Space for bottom nav */
+}
+
+/* Bottom Nav Styling */
+#bottom-nav {
+    backdrop-filter: blur(15px);
+    background: rgba(255, 255, 255, 0.9);
+    height: 70px;
+    border-radius: 25px 25px 0 0;
+    box-shadow: 0 -5px 20px rgba(0,0,0,0.05);
+}

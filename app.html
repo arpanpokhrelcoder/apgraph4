@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pro Affiliate Store</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .hidden { display: none; }
+        .active-tab { color: #2563eb; border-top: 2px solid #2563eb; }
+        body { background-color: #f8fafc; font-family: 'Inter', sans-serif; }
+    </style>
+</head>
+<body class="pb-20">
+
+    <div id="login-page" class="min-h-screen flex items-center justify-center px-4">
+        <div class="max-w-md w-full bg-white p-8 rounded-2xl shadow-xl text-center">
+            <h1 class="text-3xl font-bold mb-2 text-gray-800">Welcome Back</h1>
+            <p class="text-gray-500 mb-8">Login to manage your affiliate store</p>
+            <button onclick="showPage('home-page')" class="w-full flex items-center justify-center gap-3 bg-white border border-gray-300 p-3 rounded-lg hover:bg-gray-50 transition font-medium">
+                <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/action/google.svg" width="20">
+                Continue with Google
+            </button>
+            <p class="mt-6 text-sm text-gray-400">By continuing, you agree to our Terms & Conditions.</p>
+        </div>
+    </div>
+
+    <div id="home-page" class="hidden animate-fade-in">
+        <header class="bg-white p-4 shadow-sm sticky top-0 z-10">
+            <div class="flex justify-between items-center">
+                <h2 class="text-xl font-bold text-blue-600">My Store</h2>
+                <button onclick="toggleModal('category-modal')" class="bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-semibold">
+                    + Add Category
+                </button>
+            </div>
+        </header>
+
+        <main class="p-4">
+            <div class="mb-4">
+                <input type="text" placeholder="Search categories..." class="w-full p-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500">
+            </div>
+
+            <div id="category-container" class="grid grid-cols-2 gap-4">
+                <div class="bg-white p-4 rounded-xl shadow-sm border border-gray-100 flex flex-col items-center cursor-pointer hover:bg-blue-50">
+                    <i class="fas fa-mobile-alt text-2xl text-blue-500 mb-2"></i>
+                    <span class="font-medium text-gray-700">Electronics</span>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <div id="profile-page" class="hidden p-6 animate-fade-in">
+        <div class="text-center mt-10">
+            <div class="relative inline-block">
+                <img id="profile-pic" src="https://via.placeholder.com/100" class="w-24 h-24 rounded-full border-4 border-white shadow-lg">
+                <label class="absolute bottom-0 right-0 bg-blue-600 p-2 rounded-full text-white cursor-pointer">
+                    <i class="fas fa-camera text-xs"></i>
+                    <input type="file" class="hidden" onchange="updateProfile(this)">
+                </label>
+            </div>
+            <h3 id="user-name" class="text-xl font-bold mt-4">User Name</h3>
+            <button onclick="editName()" class="text-blue-500 text-sm">Edit Name</button>
+        </div>
+        <div class="mt-10 space-y-4">
+            <button class="w-full text-left p-4 bg-white rounded-xl shadow-sm flex justify-between items-center">
+                <span>My Products</span> <i class="fas fa-chevron-right text-gray-400"></i>
+            </button>
+            <button onclick="showPage('login-page')" class="w-full text-left p-4 bg-white rounded-xl shadow-sm text-red-500 font-medium">
+                Logout
+            </button>
+        </div>
+    </div>
+
+    <div id="settings-page" class="hidden p-6 animate-fade-in">
+        <h2 class="text-2xl font-bold mb-6">Settings</h2>
+        <div class="bg-white rounded-xl shadow-sm divide-y divide-gray-100">
+            <div class="p-4 flex justify-between items-center">
+                <span>Language</span>
+                <select class="bg-transparent text-blue-600 font-medium"><option>English</option><option>Nepali</option></select>
+            </div>
+            <div class="p-4">Terms and Conditions</div>
+            <div class="p-4">Privacy Policy</div>
+            <div class="p-4 text-gray-400 text-sm">App Version 1.0.2</div>
+        </div>
+    </div>
+
+    <nav id="bottom-nav" class="hidden fixed bottom-0 w-full bg-white border-t border-gray-200 flex justify-around p-3 z-20">
+        <button onclick="showPage('home-page')" class="nav-item flex flex-col items-center gap-1 active-tab">
+            <i class="fas fa-home text-lg"></i><span class="text-xs">Home</span>
+        </button>
+        <button onclick="showPage('profile-page')" class="nav-item flex flex-col items-center gap-1 text-gray-400">
+            <i class="fas fa-user text-lg"></i><span class="text-xs">Profile</span>
+        </button>
+        <button onclick="showPage('settings-page')" class="nav-item flex flex-col items-center gap-1 text-gray-400">
+            <i class="fas fa-cog text-lg"></i><span class="text-xs">Settings</span>
+        </button>
+    </nav>
+
+    <div id="category-modal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-6 z-50">
+        <div class="bg-white w-full rounded-2xl p-6">
+            <h3 class="text-lg font-bold mb-4">Add New Category</h3>
+            <input id="cat-name-input" type="text" placeholder="Category Name" class="w-full p-3 border rounded-lg mb-4">
+            <div class="flex gap-3">
+                <button onclick="toggleModal('category-modal')" class="flex-1 bg-gray-100 p-3 rounded-lg font-bold">Cancel</button>
+                <button onclick="addCategory()" class="flex-1 bg-blue-600 text-white p-3 rounded-lg font-bold">Create</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showPage(pageId) {
+            // Hide all pages
+            document.getElementById('login-page').classList.add('hidden');
+            document.getElementById('home-page').classList.add('hidden');
+            document.getElementById('profile-page').classList.add('hidden');
+            document.getElementById('settings-page').classList.add('hidden');
+            
+            // Show selected
+            document.getElementById(pageId).classList.remove('hidden');
+
+            // Bottom Nav Visibility
+            if(pageId === 'login-page') {
+                document.getElementById('bottom-nav').classList.add('hidden');
+            } else {
+                document.getElementById('bottom-nav').classList.remove('hidden');
+            }
+
+            // Update Nav Icons
+            document.querySelectorAll('.nav-item').forEach(btn => btn.classList.remove('active-tab', 'text-gray-400'));
+            // (Note: Simple logic for coloring icons based on page selection)
+        }
+
+        function toggleModal(id) {
+            document.getElementById(id).classList.toggle('hidden');
+        }
+
+        function addCategory() {
+            const name = document.getElementById('cat-name-input').value;
+            if(!name) return;
+
+            const container = document.getElementById('category-container');
+            const card = document.createElement('div');
+            card.className = "bg-white p-4 rounded-xl shadow-sm border border-gray-100 flex flex-col items-center cursor-pointer";
+            card.innerHTML = `<i class="fas fa-folder text-2xl text-yellow-500 mb-2"></i><span class="font-medium text-gray-700">${name}</span>`;
+            
+            container.appendChild(card);
+            document.getElementById('cat-name-input').value = '';
+            toggleModal('category-modal');
+        }
+
+        function updateProfile(input) {
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                reader.onload = e => document.getElementById('profile-pic').src = e.target.result;
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        function editName() {
+            const newName = prompt("Enter your name:");
+            if(newName) document.getElementById('user-name').innerText = newName;
+        }
+    </script>
+</body>
+</html>
